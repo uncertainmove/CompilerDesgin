@@ -1,7 +1,10 @@
 compile:
-	bison -d syntax.y
-	gcc -Wall syntax.tab.c -o parser.out
+	gcc syntax.tab.c -lfl -o parser
 edit:
 	vim syntax.y
 run:
-	./parser.out test.txt
+	./parser test.txt
+debug:
+	bison -d -t syntax.y
+nodebug:
+	bison -d syntax.y

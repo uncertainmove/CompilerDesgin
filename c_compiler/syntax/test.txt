@@ -1,5 +1,6 @@
 int main() {
-    int a = 1;
-    char c = "abc";
-    $;
+}
+int make() {
+    int a = 3;
+    return 1;
 }
