@@ -1,0 +1,19 @@
+int word() {
+ int word = int_digit; 
+ int word = word; int_digit */
+}
+int word() {
+ float word[int_digit][int_digit];
+ int word;
+ word[int_digit,int_digit] = float_digit;
+ if(word[int_digit][int_digit] == int_digit) word=int_digit else word = int_digit;
+}
+int word() {
+ int word;
+ word = word + int_digit;
+}
+int word() {
+ int word = err_octal;
+ int word = float_digit;
+ int word = err_hexadecimal;
+}

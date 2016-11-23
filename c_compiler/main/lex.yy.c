@@ -588,10 +588,10 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "token_scanner.l"
-#line 2 "token_scanner.l"
+#line 1 "scanner.l"
+#line 2 "scanner.l"
 
-    #include "../syntax/syntax.tab.h"
+    #include "syntax.tab.h"
     #include"token.h"
     #include"Node.h"
     #include<string.h>
@@ -601,7 +601,7 @@ char *yytext;
     int yycolumn = 1;
     int errorCount = 0;
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng - 1; yycolumn += yyleng;
-    struct Node* NewNode(char *node_name, int lineno, int group);
+    struct Node* NewNode(int node_name, int lineno, int listno, int group);
 
 #line 607 "lex.yy.c"
 
@@ -819,7 +819,7 @@ YY_DECL
 		}
 
 	{
-#line 42 "token_scanner.l"
+#line 42 "scanner.l"
 
 
 #line 826 "lex.yy.c"
@@ -891,376 +891,365 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 44 "token_scanner.l"
+#line 44 "scanner.l"
 {
     print("#"); 
-    yylval.token_p = NewNode(yytext, yylineno, POUND); 
     return POUND;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 50 "token_scanner.l"
+#line 49 "scanner.l"
 {
     print("include"); 
-    yylval.token_p = NewNode(yytext, yylineno, INCLUDE); 
     return INCLUDE;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 56 "token_scanner.l"
+#line 54 "scanner.l"
 {
     print("void"); 
-    yylval.token_p = NewNode(yytext, yylineno, VOID); 
     return VOID;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 62 "token_scanner.l"
+#line 59 "scanner.l"
 {
     print("int"); 
-    yylval.token_p = NewNode(yytext, yylineno, INT); 
     return INT;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 68 "token_scanner.l"
+#line 64 "scanner.l"
 {
     print("char"); 
-    yylval.token_p = NewNode(yytext, yylineno, CHAR);  
     return CHAR;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 74 "token_scanner.l"
+#line 69 "scanner.l"
 {
     print("double"); 
-    yylval.token_p = NewNode(yytext, yylineno, DOUBLE); 
     return DOUBLE;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 80 "token_scanner.l"
+#line 74 "scanner.l"
 {
     print("float"); 
-    yylval.token_p = NewNode(yytext, yylineno, FLOAT); 
     return FLOAT;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 86 "token_scanner.l"
+#line 79 "scanner.l"
 {
     print("short"); 
-    yylval.token_p = NewNode(yytext, yylineno, SHORT); 
     return SHORT;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 92 "token_scanner.l"
+#line 84 "scanner.l"
 {
     print("unsigned"); 
-    yylval.token_p = NewNode(yytext, yylineno, UNSIGNED); 
     return UNSIGNED;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 98 "token_scanner.l"
+#line 89 "scanner.l"
 {
     print("+"); 
-    yylval.token_p = NewNode(yytext, yylineno, PLUS); 
+    //yylval.token_p = NewNode(yytext, yylineno, PLUS); 
     return PLUS;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 104 "token_scanner.l"
+#line 95 "scanner.l"
 {
     print("-"); 
-    yylval.token_p = NewNode(yytext, yylineno, SUB); 
+    //yylval.token_p = NewNode(yytext, yylineno, SUB); 
     return SUB;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 110 "token_scanner.l"
+#line 101 "scanner.l"
 {
     print("*"); 
-    yylval.token_p = NewNode(yytext, yylineno, MUL); 
+    //yylval.token_p = NewNode(yytext, yylineno, MUL); 
     return MUL;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 116 "token_scanner.l"
+#line 107 "scanner.l"
 {
     print("/"); 
-    yylval.token_p = NewNode(yytext, yylineno, DIV); 
+    //yylval.token_p = NewNode(yytext, yylineno, DIV); 
     return DIV;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 122 "token_scanner.l"
+#line 113 "scanner.l"
 {
     print("%"); 
-    yylval.token_p = NewNode(yytext, yylineno, MOD); 
+    //yylval.token_p = NewNode(yytext, yylineno, MOD); 
     return MOD;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 128 "token_scanner.l"
+#line 119 "scanner.l"
 {
     print("="); 
-    yylval.token_p = NewNode(yytext, yylineno, ASSIGNOP); 
+    //yylval.token_p = NewNode(yytext, yylineno, ASSIGNOP); 
     return ASSIGNOP;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 134 "token_scanner.l"
+#line 125 "scanner.l"
 {
     print(">"); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGER); 
-    return JUDGE_BIGER;
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGGER); 
+    return JUDGE_BIGGER;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 140 "token_scanner.l"
+#line 131 "scanner.l"
 {
     print("<"); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER); 
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER); 
     return JUDGE_SMALLER;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 146 "token_scanner.l"
+#line 137 "scanner.l"
 {
     print(">="); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGER_EQUAL); 
-    return JUDGE_BIGER_EQUAL;
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGGER_EQUAL); 
+    return JUDGE_BIGGER_EQUAL;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 152 "token_scanner.l"
+#line 143 "scanner.l"
 {
     print("<="); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER_EQUAL); 
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER_EQUAL); 
     return JUDGE_SMALLER_EQUAL;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 158 "token_scanner.l"
+#line 149 "scanner.l"
 {
     print("=="); 
-    yylval.token_p = NewNode(yytext, yylineno,  JUDGE_EQUAL); 
+    //yylval.token_p = NewNode(yytext, yylineno,  JUDGE_EQUAL); 
     return JUDGE_EQUAL;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 164 "token_scanner.l"
+#line 155 "scanner.l"
 {
     print("!="); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_NOT_EQUAL); 
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_NOT_EQUAL); 
     return JUDGE_NOT_EQUAL;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 170 "token_scanner.l"
+#line 161 "scanner.l"
 {
     print("\""); 
-    yylval.token_p = NewNode(yytext, yylineno, DOUBLE_QUOTE); 
     return DOUBLE_QUOTE;
 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 176 "token_scanner.l"
+#line 166 "scanner.l"
 {
     print("\'"); 
-    yylval.token_p = NewNode(yytext, yylineno, SINGLE_QUOTE); 
     return SINGLE_QUOTE;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 182 "token_scanner.l"
+#line 171 "scanner.l"
 {
     print("for"); 
-    yylval.token_p = NewNode(yytext, yylineno, FOR); 
+    //yylval.token_p = NewNode(yytext, yylineno, FOR); 
     return FOR;
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 188 "token_scanner.l"
+#line 177 "scanner.l"
 {
     print("while"); 
-    yylval.token_p = NewNode(yytext, yylineno, WHILE); 
+    //yylval.token_p = NewNode(yytext, yylineno, WHILE); 
     return WHILE;
 }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 194 "token_scanner.l"
+#line 183 "scanner.l"
 {
     print("if"); 
-    yylval.token_p = NewNode(yytext, yylineno, IF); 
+    //yylval.token_p = NewNode(yytext, yylineno, IF); 
     return IF;
 }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 200 "token_scanner.l"
+#line 189 "scanner.l"
 {
     print("else"); 
-    yylval.token_p = NewNode(yytext, yylineno, ELSE); 
+    //yylval.token_p = NewNode(yytext, yylineno, ELSE); 
     return ELSE;
 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 206 "token_scanner.l"
+#line 195 "scanner.l"
 {
     print("return"); 
-    yylval.token_p = NewNode(yytext, yylineno, RETURN); 
+    //yylval.token_p = NewNode(yytext, yylineno, RETURN); 
     return RETURN;
 }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 212 "token_scanner.l"
+#line 201 "scanner.l"
 {
     print("break"); 
-    yylval.token_p = NewNode(yytext, yylineno, BREAK); 
+    //yylval.token_p = NewNode(yytext, yylineno, BREAK); 
     return BREAK;
 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 218 "token_scanner.l"
+#line 207 "scanner.l"
 {
     print("struct"); 
-    yylval.token_p = NewNode(yytext, yylineno, STRUCT); 
+    //yylval.token_p = NewNode(yytext, yylineno, STRUCT); 
     return STRUCT;
 }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 224 "token_scanner.l"
+#line 213 "scanner.l"
 {
     print("("); 
-    yylval.token_p = NewNode(yytext, yylineno, LP); 
+    //yylval.token_p = NewNode(yytext, yylineno, LP); 
     return LP;
 }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 230 "token_scanner.l"
+#line 219 "scanner.l"
 {
     print(")"); 
-    yylval.token_p = NewNode(yytext, yylineno, RP); 
+    //yylval.token_p = NewNode(yytext, yylineno, RP); 
     return RP;
 }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 236 "token_scanner.l"
+#line 225 "scanner.l"
 {
     print(","); 
-    yylval.token_p = NewNode(yytext, yylineno, COMMA); 
+    //yylval.token_p = NewNode(yytext, yylineno, COMMA); 
     return COMMA;
 }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 242 "token_scanner.l"
+#line 231 "scanner.l"
 {
     print("."); 
-    yylval.token_p = NewNode(yytext, yylineno, POINT); 
+    //yylval.token_p = NewNode(yytext, yylineno, POINT); 
     return POINT;
 }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 248 "token_scanner.l"
+#line 237 "scanner.l"
 {
     print(";"); 
-    yylval.token_p = NewNode(yytext, yylineno, SEMICOLON); 
+    //yylval.token_p = NewNode(yytext, yylineno, SEMICOLON); 
     return SEMICOLON;
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 254 "token_scanner.l"
+#line 243 "scanner.l"
 {
     print("{"); 
-    yylval.token_p = NewNode(yytext, yylineno, LC); 
+    //yylval.token_p = NewNode(yytext, yylineno, LC); 
     return LC;
 }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 260 "token_scanner.l"
+#line 249 "scanner.l"
 {
     print("}"); 
-    yylval.token_p = NewNode(yytext, yylineno, RC); 
+    //yylval.token_p = NewNode(yytext, yylineno, RC); 
     return RC;
 }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 266 "token_scanner.l"
+#line 255 "scanner.l"
 {
     print("["); 
-    yylval.token_p = NewNode(yytext, yylineno, LB); 
+    //yylval.token_p = NewNode(yytext, yylineno, LB); 
     return LB;
 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 272 "token_scanner.l"
+#line 261 "scanner.l"
 {
     print("]"); 
-    yylval.token_p = NewNode(yytext, yylineno, RB); 
+    //yylval.token_p = NewNode(yytext, yylineno, RB); 
     return RB;
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 278 "token_scanner.l"
+#line 267 "scanner.l"
 {
     print("AND"); 
-    yylval.token_p = NewNode(yytext, yylineno, AND); 
+    //yylval.token_p = NewNode(yytext, yylineno, AND); 
     return AND;
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 284 "token_scanner.l"
+#line 273 "scanner.l"
 {
     print("OR"); 
-    yylval.token_p = NewNode(yytext, yylineno, OR); 
+    //yylval.token_p = NewNode(yytext, yylineno, OR); 
     return OR;
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 290 "token_scanner.l"
+#line 279 "scanner.l"
 {
     print("\n"); 
     char c = input(); 
@@ -1270,14 +1259,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 297 "token_scanner.l"
+#line 286 "scanner.l"
 {
     CommentMatch();
 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 301 "token_scanner.l"
+#line 290 "scanner.l"
 {
     print("*/"); 
     printf("Error type A at line %d:%d: Miss match \"%s\"\n", yylineno, yylloc.first_column, yytext);
@@ -1285,32 +1274,35 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 306 "token_scanner.l"
+#line 295 "scanner.l"
 {
     print("word"); 
-    yylval.token_p = NewNode(yytext, yylineno, WORD); 
+    // yylval.token_p = NewNode(WORD, yylineno, WORD); 
+    // char *s = yytext;
+    yylval.type_string= strdup(yytext);
+    // printf("%s\n", s);
     return WORD;
 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 312 "token_scanner.l"
+#line 304 "scanner.l"
 {
     print(" ");
 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 316 "token_scanner.l"
+#line 308 "scanner.l"
 {
     print("octal"); 
-    yylval.token_p = NewNode(yytext, yylineno, OCTAL); 
+    //yylval.token_p = NewNode(OCTAL, yylineno, OCTAL); 
     return OCTAL;
 }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 322 "token_scanner.l"
+#line 314 "scanner.l"
 {
     errorCount++; 
     print("err_octal"); 
@@ -1319,7 +1311,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 328 "token_scanner.l"
+#line 320 "scanner.l"
 {
     errorCount++; 
     print("err_hexadecimal"); 
@@ -1328,44 +1320,47 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 334 "token_scanner.l"
+#line 326 "scanner.l"
 {
     print("hexadecimal"); 
-    yylval.token_p = NewNode(yytext, yylineno, HEXADECIMAL); 
+    //yylval.token_p = NewNode(HEXADECIMAL, yylineno, HEXADECIMAL); 
     return HEXADECIMAL;
 }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 340 "token_scanner.l"
+#line 332 "scanner.l"
 {
     print("int_digit"); 
-    yylval.token_p = NewNode(yytext, yylineno, INT_DIGIT); 
+    //yylval.token_p = NewNode(INT_DIGIT, yylineno, INT_DIGIT); 
+    yylval.type_int = atoi(yytext);
     return INT_DIGIT;
 }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 346 "token_scanner.l"
+#line 339 "scanner.l"
 {
     print("float_digit"); 
-    yylval.token_p = NewNode(yytext, yylineno, FLOAT_DIGIT); 
+    //yylval.token_p = NewNode(FLOAT_DIGIT, yylineno, FLOAT_DIGIT); 
+    yylval.type_float = atof(yytext);
     return FLOAT_DIGIT;
 }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 352 "token_scanner.l"
+#line 346 "scanner.l"
 {
     print("char_digit"); 
-    yylval.token_p = NewNode(yytext, yylineno, CHAR_DIGIT);  
+    //yylval.token_p = NewNode(CHAR_DIGIT, yylineno, CHAR_DIGIT);  
+    yylval.type_char = *yytext;
     return CHAR_DIGIT;
 }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 358 "token_scanner.l"
+#line 353 "scanner.l"
 {
     print("\n"); 
     yycolumn = 1;
@@ -1373,7 +1368,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 363 "token_scanner.l"
+#line 358 "scanner.l"
 {
     errorCount++; 
     printf("Error type A at line %d:%d: Mysterious charactor \"%s\"\n", yylineno, yylloc.first_column, yytext);
@@ -1381,10 +1376,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 368 "token_scanner.l"
+#line 363 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1388 "lex.yy.c"
+#line 1383 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2356,7 +2351,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 368 "token_scanner.l"
+#line 363 "scanner.l"
 
 
 #if 0
@@ -2381,9 +2376,9 @@ int yywrap()
 /*
 函数功能：打印关键字信息
 */
-void print(const char* s) {
-    FILE *g = fopen("result.txt", "w+");
-    fputs(s, g);
+void print(const char *s) {
+    //FILE *g = fopen("result.txt", "w+");
+    //fprintf(g, "%s", s);
 }
 
 void CommentMatch() {
@@ -2402,19 +2397,19 @@ void CommentMatch() {
     }
 }
 
-struct Node* NewNode(char *node_name, int lineno, int group) {
+/* --NewNode-- */
+struct Node* NewNode(int node_name, int lineno, int listno, int isWhat) {
     struct Node *p = (struct Node*)malloc(sizeof(struct Node));
     if(p == NULL) {
         printf("Error: out of memory.\n");
         exit(1);
     }
-    p->name = (char *)malloc(sizeof(char) * (strlen(node_name) + 1));
-    strcpy(p->name, node_name);
-    p->group = group;
-    p->type = NULL;    //语义分析时赋值
+    p->name = node_name;
+    p->lineno = lineno;
+    p->listno = listno;
+    p->type = isWhat;    //语义分析时赋值
     p->brother = NULL;
     p->child = NULL;
-    p->No_Line = lineno;
     p->No_Child = 0;
     p->IsBegin = 0;
     return p;

@@ -1,0 +1,2278 @@
+Terminals unused in grammar
+
+   POUND
+   INCLUDE
+   VOID
+   OCTAL
+   HEXADECIMAL
+   UNSIGNED
+   UNSIGNED_DIGIT
+   CHAR
+   MOD
+   SINGLE_QUOTE
+   DOUBLE_QUOTE
+   FOR
+   BREAK
+   LEFT_ANGLE_BRA
+   RIGHT_ANGLE_BRA
+   ANNOTATION_LINE
+   ANNOTATION_BLOCK_START
+   ANNOTATION_BLOCK_STOP
+   STRING
+
+
+语法
+
+    0 $accept: program $end
+
+    1 program: extdeflist
+
+    2 extdeflist: extdef extdeflist
+    3           | %empty
+
+    4 extdef: specifier extdeclist SEMICOLON
+    5       | specifier extdeclist error SEMICOLON
+    6       | specifier SEMICOLON
+    7       | specifier fundec compst
+
+    8 extdeclist: vardec
+    9           | vardec COMMA extdeclist
+
+   10 specifier: type
+   11          | structspecifier
+
+   12 structspecifier: STRUCT opttag LC deflist RC
+   13                | STRUCT opttag LC deflist error RC
+   14                | STRUCT tag
+
+   15 opttag: WORD
+   16       | %empty
+
+   17 tag: WORD
+
+   18 vardec: WORD
+   19       | vardec LB INT RB
+   20       | vardec LB INT_DIGIT RB
+
+   21 fundec: WORD LP error RP
+   22       | WORD LP RP
+   23       | WORD LP varlist RP
+
+   24 varlist: paramdec COMMA varlist
+   25        | paramdec
+
+   26 paramdec: specifier vardec
+
+   27 compst: LC deflist stmtlist RC
+   28       | LC deflist stmtlist error RC
+
+   29 stmtlist: stmt stmtlist
+   30         | %empty
+
+   31 stmt: exp SEMICOLON
+   32     | exp error SEMICOLON
+   33     | compst
+   34     | RETURN exp SEMICOLON
+   35     | RETURN SEMICOLON
+   36     | IF LP exp RP stmt
+   37     | IF LP exp RP stmt ELSE stmt
+   38     | WHILE LP exp RP stmt
+
+   39 deflist: def deflist
+   40        | %empty
+
+   41 def: specifier declist SEMICOLON
+   42    | specifier declist error SEMICOLON
+
+   43 declist: dec
+   44        | dec COMMA declist
+
+   45 dec: vardec
+   46    | vardec ASSIGNOP exp
+
+   47 exp: exp ASSIGNOP exp
+   48    | exp AND exp
+   49    | exp OR exp
+   50    | exp JUDGE_BIGER exp
+   51    | exp JUDGE_SMALLER exp
+   52    | exp JUDGE_BIGER_EQUAL exp
+   53    | exp JUDGE_SMALLER_EQUAL exp
+   54    | exp JUDGE_NOT_EQUAL exp
+   55    | exp JUDGE_EQUAL exp
+   56    | exp PLUS exp
+   57    | exp SUB exp
+   58    | exp MUL exp
+   59    | exp DIV exp
+   60    | LP exp RP
+   61    | MUL exp
+   62    | NOT exp
+   63    | WORD LP args RP
+   64    | WORD LP RP
+   65    | exp LB exp RB
+   66    | exp POINT WORD
+   67    | WORD
+   68    | constant
+
+   69 constant: INT_DIGIT
+   70         | CHAR_DIGIT
+   71         | FLOAT_DIGIT
+
+   72 args: exp COMMA args
+   73     | exp
+
+   74 type: INT
+   75     | FLOAT
+   76     | SHORT
+   77     | DOUBLE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 5 13 21 28 32 42
+POUND (258)
+INCLUDE (259)
+VOID (260)
+INT (261) 19 74
+WORD (262) 15 17 18 21 22 23 63 64 66 67
+INT_DIGIT (263) 20 69
+FLOAT (264) 75
+FLOAT_DIGIT (265) 71
+DOUBLE (266) 77
+OCTAL (267)
+HEXADECIMAL (268)
+SHORT (269) 76
+UNSIGNED (270)
+UNSIGNED_DIGIT (271)
+CHAR (272)
+CHAR_DIGIT (273) 70
+PLUS (274) 56
+SUB (275) 57
+MUL (276) 58 61
+DIV (277) 59
+MOD (278)
+ASSIGNOP (279) 46 47
+COMMA (280) 9 24 44 72
+SEMICOLON (281) 4 5 6 31 32 34 35 41 42
+POINT (282) 66
+SINGLE_QUOTE (283)
+DOUBLE_QUOTE (284)
+JUDGE_BIGER (285) 50
+JUDGE_SMALLER (286) 51
+JUDGE_BIGER_EQUAL (287) 52
+JUDGE_SMALLER_EQUAL (288) 53
+JUDGE_EQUAL (289) 55
+JUDGE_NOT_EQUAL (290) 54
+NOT (291) 62
+FOR (292)
+WHILE (293) 38
+IF (294) 36 37
+ELSE (295) 37
+RETURN (296) 34 35
+BREAK (297)
+STRUCT (298) 12 13 14
+LP (299) 21 22 23 36 37 38 60 63 64
+RP (300) 21 22 23 36 37 38 60 63 64
+LC (301) 12 13 27 28
+RC (302) 12 13 27 28
+LB (303) 19 20 65
+RB (304) 19 20 65
+LEFT_ANGLE_BRA (305)
+RIGHT_ANGLE_BRA (306)
+OR (307) 49
+AND (308) 48
+ANNOTATION_LINE (309)
+ANNOTATION_BLOCK_START (310)
+ANNOTATION_BLOCK_STOP (311)
+STRING (312)
+LOWER_THAN_ELSE (313)
+
+
+Nonterminals, with rules where they appear
+
+$accept (59)
+    左： 0
+program (60)
+    左： 1, 右： 0
+extdeflist (61)
+    左： 2 3, 右： 1 2
+extdef (62)
+    左： 4 5 6 7, 右： 2
+extdeclist (63)
+    左： 8 9, 右： 4 5 9
+specifier (64)
+    左： 10 11, 右： 4 5 6 7 26 41 42
+structspecifier (65)
+    左： 12 13 14, 右： 11
+opttag (66)
+    左： 15 16, 右： 12 13
+tag (67)
+    左： 17, 右： 14
+vardec (68)
+    左： 18 19 20, 右： 8 9 19 20 26 45 46
+fundec (69)
+    左： 21 22 23, 右： 7
+varlist (70)
+    左： 24 25, 右： 23 24
+paramdec (71)
+    左： 26, 右： 24 25
+compst (72)
+    左： 27 28, 右： 7 33
+stmtlist (73)
+    左： 29 30, 右： 27 28 29
+stmt (74)
+    左： 31 32 33 34 35 36 37 38, 右： 29 36 37 38
+deflist (75)
+    左： 39 40, 右： 12 13 27 28 39
+def (76)
+    左： 41 42, 右： 39
+declist (77)
+    左： 43 44, 右： 41 42 44
+dec (78)
+    左： 45 46, 右： 43 44
+exp (79)
+    左： 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
+    66 67 68, 右： 31 32 34 36 37 38 46 47 48 49 50 51 52 53 54 55
+    56 57 58 59 60 61 62 65 66 72 73
+constant (80)
+    左： 69 70 71, 右： 68
+args (81)
+    左： 72 73, 右： 63 72
+type (82)
+    左： 74 75 76 77, 右： 10
+
+
+State 0
+
+    0 $accept: . program $end
+
+    INT     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    DOUBLE  shift, and go to state 3
+    SHORT   shift, and go to state 4
+    STRUCT  shift, and go to state 5
+
+    $default  reduce using rule 3 (extdeflist)
+
+    program          转到状态 6
+    extdeflist       转到状态 7
+    extdef           转到状态 8
+    specifier        转到状态 9
+    structspecifier  转到状态 10
+    type             转到状态 11
+
+
+State 1
+
+   74 type: INT .
+
+    $default  reduce using rule 74 (type)
+
+
+State 2
+
+   75 type: FLOAT .
+
+    $default  reduce using rule 75 (type)
+
+
+State 3
+
+   77 type: DOUBLE .
+
+    $default  reduce using rule 77 (type)
+
+
+State 4
+
+   76 type: SHORT .
+
+    $default  reduce using rule 76 (type)
+
+
+State 5
+
+   12 structspecifier: STRUCT . opttag LC deflist RC
+   13                | STRUCT . opttag LC deflist error RC
+   14                | STRUCT . tag
+
+    WORD  shift, and go to state 12
+
+    $default  reduce using rule 16 (opttag)
+
+    opttag  转到状态 13
+    tag     转到状态 14
+
+
+State 6
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 15
+
+
+State 7
+
+    1 program: extdeflist .
+
+    $default  reduce using rule 1 (program)
+
+
+State 8
+
+    2 extdeflist: extdef . extdeflist
+
+    INT     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    DOUBLE  shift, and go to state 3
+    SHORT   shift, and go to state 4
+    STRUCT  shift, and go to state 5
+
+    $default  reduce using rule 3 (extdeflist)
+
+    extdeflist       转到状态 16
+    extdef           转到状态 8
+    specifier        转到状态 9
+    structspecifier  转到状态 10
+    type             转到状态 11
+
+
+State 9
+
+    4 extdef: specifier . extdeclist SEMICOLON
+    5       | specifier . extdeclist error SEMICOLON
+    6       | specifier . SEMICOLON
+    7       | specifier . fundec compst
+
+    WORD       shift, and go to state 17
+    SEMICOLON  shift, and go to state 18
+
+    extdeclist  转到状态 19
+    vardec      转到状态 20
+    fundec      转到状态 21
+
+
+State 10
+
+   11 specifier: structspecifier .
+
+    $default  reduce using rule 11 (specifier)
+
+
+State 11
+
+   10 specifier: type .
+
+    $default  reduce using rule 10 (specifier)
+
+
+State 12
+
+   15 opttag: WORD .
+   17 tag: WORD .
+
+    LC        reduce using rule 15 (opttag)
+    $default  reduce using rule 17 (tag)
+
+
+State 13
+
+   12 structspecifier: STRUCT opttag . LC deflist RC
+   13                | STRUCT opttag . LC deflist error RC
+
+    LC  shift, and go to state 22
+
+
+State 14
+
+   14 structspecifier: STRUCT tag .
+
+    $default  reduce using rule 14 (structspecifier)
+
+
+State 15
+
+    0 $accept: program $end .
+
+    $default  接受
+
+
+State 16
+
+    2 extdeflist: extdef extdeflist .
+
+    $default  reduce using rule 2 (extdeflist)
+
+
+State 17
+
+   18 vardec: WORD .
+   21 fundec: WORD . LP error RP
+   22       | WORD . LP RP
+   23       | WORD . LP varlist RP
+
+    LP  shift, and go to state 23
+
+    $default  reduce using rule 18 (vardec)
+
+
+State 18
+
+    6 extdef: specifier SEMICOLON .
+
+    $default  reduce using rule 6 (extdef)
+
+
+State 19
+
+    4 extdef: specifier extdeclist . SEMICOLON
+    5       | specifier extdeclist . error SEMICOLON
+
+    error      shift, and go to state 24
+    SEMICOLON  shift, and go to state 25
+
+
+State 20
+
+    8 extdeclist: vardec .
+    9           | vardec . COMMA extdeclist
+   19 vardec: vardec . LB INT RB
+   20       | vardec . LB INT_DIGIT RB
+
+    COMMA  shift, and go to state 26
+    LB     shift, and go to state 27
+
+    $default  reduce using rule 8 (extdeclist)
+
+
+State 21
+
+    7 extdef: specifier fundec . compst
+
+    LC  shift, and go to state 28
+
+    compst  转到状态 29
+
+
+State 22
+
+   12 structspecifier: STRUCT opttag LC . deflist RC
+   13                | STRUCT opttag LC . deflist error RC
+
+    INT     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    DOUBLE  shift, and go to state 3
+    SHORT   shift, and go to state 4
+    STRUCT  shift, and go to state 5
+
+    $default  reduce using rule 40 (deflist)
+
+    specifier        转到状态 30
+    structspecifier  转到状态 10
+    deflist          转到状态 31
+    def              转到状态 32
+    type             转到状态 11
+
+
+State 23
+
+   21 fundec: WORD LP . error RP
+   22       | WORD LP . RP
+   23       | WORD LP . varlist RP
+
+    error   shift, and go to state 33
+    INT     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    DOUBLE  shift, and go to state 3
+    SHORT   shift, and go to state 4
+    STRUCT  shift, and go to state 5
+    RP      shift, and go to state 34
+
+    specifier        转到状态 35
+    structspecifier  转到状态 10
+    varlist          转到状态 36
+    paramdec         转到状态 37
+    type             转到状态 11
+
+
+State 24
+
+    5 extdef: specifier extdeclist error . SEMICOLON
+
+    SEMICOLON  shift, and go to state 38
+
+
+State 25
+
+    4 extdef: specifier extdeclist SEMICOLON .
+
+    $default  reduce using rule 4 (extdef)
+
+
+State 26
+
+    9 extdeclist: vardec COMMA . extdeclist
+
+    WORD  shift, and go to state 39
+
+    extdeclist  转到状态 40
+    vardec      转到状态 20
+
+
+State 27
+
+   19 vardec: vardec LB . INT RB
+   20       | vardec LB . INT_DIGIT RB
+
+    INT        shift, and go to state 41
+    INT_DIGIT  shift, and go to state 42
+
+
+State 28
+
+   27 compst: LC . deflist stmtlist RC
+   28       | LC . deflist stmtlist error RC
+
+    INT     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    DOUBLE  shift, and go to state 3
+    SHORT   shift, and go to state 4
+    STRUCT  shift, and go to state 5
+
+    $default  reduce using rule 40 (deflist)
+
+    specifier        转到状态 30
+    structspecifier  转到状态 10
+    deflist          转到状态 43
+    def              转到状态 32
+    type             转到状态 11
+
+
+State 29
+
+    7 extdef: specifier fundec compst .
+
+    $default  reduce using rule 7 (extdef)
+
+
+State 30
+
+   41 def: specifier . declist SEMICOLON
+   42    | specifier . declist error SEMICOLON
+
+    WORD  shift, and go to state 39
+
+    vardec   转到状态 44
+    declist  转到状态 45
+    dec      转到状态 46
+
+
+State 31
+
+   12 structspecifier: STRUCT opttag LC deflist . RC
+   13                | STRUCT opttag LC deflist . error RC
+
+    error  shift, and go to state 47
+    RC     shift, and go to state 48
+
+
+State 32
+
+   39 deflist: def . deflist
+
+    INT     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    DOUBLE  shift, and go to state 3
+    SHORT   shift, and go to state 4
+    STRUCT  shift, and go to state 5
+
+    $default  reduce using rule 40 (deflist)
+
+    specifier        转到状态 30
+    structspecifier  转到状态 10
+    deflist          转到状态 49
+    def              转到状态 32
+    type             转到状态 11
+
+
+State 33
+
+   21 fundec: WORD LP error . RP
+
+    RP  shift, and go to state 50
+
+
+State 34
+
+   22 fundec: WORD LP RP .
+
+    $default  reduce using rule 22 (fundec)
+
+
+State 35
+
+   26 paramdec: specifier . vardec
+
+    WORD  shift, and go to state 39
+
+    vardec  转到状态 51
+
+
+State 36
+
+   23 fundec: WORD LP varlist . RP
+
+    RP  shift, and go to state 52
+
+
+State 37
+
+   24 varlist: paramdec . COMMA varlist
+   25        | paramdec .
+
+    COMMA  shift, and go to state 53
+
+    $default  reduce using rule 25 (varlist)
+
+
+State 38
+
+    5 extdef: specifier extdeclist error SEMICOLON .
+
+    $default  reduce using rule 5 (extdef)
+
+
+State 39
+
+   18 vardec: WORD .
+
+    $default  reduce using rule 18 (vardec)
+
+
+State 40
+
+    9 extdeclist: vardec COMMA extdeclist .
+
+    $default  reduce using rule 9 (extdeclist)
+
+
+State 41
+
+   19 vardec: vardec LB INT . RB
+
+    RB  shift, and go to state 54
+
+
+State 42
+
+   20 vardec: vardec LB INT_DIGIT . RB
+
+    RB  shift, and go to state 55
+
+
+State 43
+
+   27 compst: LC deflist . stmtlist RC
+   28       | LC deflist . stmtlist error RC
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    WHILE        shift, and go to state 62
+    IF           shift, and go to state 63
+    RETURN       shift, and go to state 64
+    LP           shift, and go to state 65
+    LC           shift, and go to state 28
+
+    $default  reduce using rule 30 (stmtlist)
+
+    compst    转到状态 66
+    stmtlist  转到状态 67
+    stmt      转到状态 68
+    exp       转到状态 69
+    constant  转到状态 70
+
+
+State 44
+
+   19 vardec: vardec . LB INT RB
+   20       | vardec . LB INT_DIGIT RB
+   45 dec: vardec .
+   46    | vardec . ASSIGNOP exp
+
+    ASSIGNOP  shift, and go to state 71
+    LB        shift, and go to state 27
+
+    $default  reduce using rule 45 (dec)
+
+
+State 45
+
+   41 def: specifier declist . SEMICOLON
+   42    | specifier declist . error SEMICOLON
+
+    error      shift, and go to state 72
+    SEMICOLON  shift, and go to state 73
+
+
+State 46
+
+   43 declist: dec .
+   44        | dec . COMMA declist
+
+    COMMA  shift, and go to state 74
+
+    $default  reduce using rule 43 (declist)
+
+
+State 47
+
+   13 structspecifier: STRUCT opttag LC deflist error . RC
+
+    RC  shift, and go to state 75
+
+
+State 48
+
+   12 structspecifier: STRUCT opttag LC deflist RC .
+
+    $default  reduce using rule 12 (structspecifier)
+
+
+State 49
+
+   39 deflist: def deflist .
+
+    $default  reduce using rule 39 (deflist)
+
+
+State 50
+
+   21 fundec: WORD LP error RP .
+
+    $default  reduce using rule 21 (fundec)
+
+
+State 51
+
+   19 vardec: vardec . LB INT RB
+   20       | vardec . LB INT_DIGIT RB
+   26 paramdec: specifier vardec .
+
+    LB  shift, and go to state 27
+
+    $default  reduce using rule 26 (paramdec)
+
+
+State 52
+
+   23 fundec: WORD LP varlist RP .
+
+    $default  reduce using rule 23 (fundec)
+
+
+State 53
+
+   24 varlist: paramdec COMMA . varlist
+
+    INT     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    DOUBLE  shift, and go to state 3
+    SHORT   shift, and go to state 4
+    STRUCT  shift, and go to state 5
+
+    specifier        转到状态 35
+    structspecifier  转到状态 10
+    varlist          转到状态 76
+    paramdec         转到状态 37
+    type             转到状态 11
+
+
+State 54
+
+   19 vardec: vardec LB INT RB .
+
+    $default  reduce using rule 19 (vardec)
+
+
+State 55
+
+   20 vardec: vardec LB INT_DIGIT RB .
+
+    $default  reduce using rule 20 (vardec)
+
+
+State 56
+
+   63 exp: WORD . LP args RP
+   64    | WORD . LP RP
+   67    | WORD .
+
+    LP  shift, and go to state 77
+
+    $default  reduce using rule 67 (exp)
+
+
+State 57
+
+   69 constant: INT_DIGIT .
+
+    $default  reduce using rule 69 (constant)
+
+
+State 58
+
+   71 constant: FLOAT_DIGIT .
+
+    $default  reduce using rule 71 (constant)
+
+
+State 59
+
+   70 constant: CHAR_DIGIT .
+
+    $default  reduce using rule 70 (constant)
+
+
+State 60
+
+   61 exp: MUL . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 78
+    constant  转到状态 70
+
+
+State 61
+
+   62 exp: NOT . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 79
+    constant  转到状态 70
+
+
+State 62
+
+   38 stmt: WHILE . LP exp RP stmt
+
+    LP  shift, and go to state 80
+
+
+State 63
+
+   36 stmt: IF . LP exp RP stmt
+   37     | IF . LP exp RP stmt ELSE stmt
+
+    LP  shift, and go to state 81
+
+
+State 64
+
+   34 stmt: RETURN . exp SEMICOLON
+   35     | RETURN . SEMICOLON
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    SEMICOLON    shift, and go to state 82
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 83
+    constant  转到状态 70
+
+
+State 65
+
+   60 exp: LP . exp RP
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 84
+    constant  转到状态 70
+
+
+State 66
+
+   33 stmt: compst .
+
+    $default  reduce using rule 33 (stmt)
+
+
+State 67
+
+   27 compst: LC deflist stmtlist . RC
+   28       | LC deflist stmtlist . error RC
+
+    error  shift, and go to state 85
+    RC     shift, and go to state 86
+
+
+State 68
+
+   29 stmtlist: stmt . stmtlist
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    WHILE        shift, and go to state 62
+    IF           shift, and go to state 63
+    RETURN       shift, and go to state 64
+    LP           shift, and go to state 65
+    LC           shift, and go to state 28
+
+    $default  reduce using rule 30 (stmtlist)
+
+    compst    转到状态 66
+    stmtlist  转到状态 87
+    stmt      转到状态 68
+    exp       转到状态 69
+    constant  转到状态 70
+
+
+State 69
+
+   31 stmt: exp . SEMICOLON
+   32     | exp . error SEMICOLON
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    error                shift, and go to state 88
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    SEMICOLON            shift, and go to state 94
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+
+State 70
+
+   68 exp: constant .
+
+    $default  reduce using rule 68 (exp)
+
+
+State 71
+
+   46 dec: vardec ASSIGNOP . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 105
+    constant  转到状态 70
+
+
+State 72
+
+   42 def: specifier declist error . SEMICOLON
+
+    SEMICOLON  shift, and go to state 106
+
+
+State 73
+
+   41 def: specifier declist SEMICOLON .
+
+    $default  reduce using rule 41 (def)
+
+
+State 74
+
+   44 declist: dec COMMA . declist
+
+    WORD  shift, and go to state 39
+
+    vardec   转到状态 44
+    declist  转到状态 107
+    dec      转到状态 46
+
+
+State 75
+
+   13 structspecifier: STRUCT opttag LC deflist error RC .
+
+    $default  reduce using rule 13 (structspecifier)
+
+
+State 76
+
+   24 varlist: paramdec COMMA varlist .
+
+    $default  reduce using rule 24 (varlist)
+
+
+State 77
+
+   63 exp: WORD LP . args RP
+   64    | WORD LP . RP
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+    RP           shift, and go to state 108
+
+    exp       转到状态 109
+    constant  转到状态 70
+    args      转到状态 110
+
+
+State 78
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   61    | MUL exp .
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 61 (exp)
+
+
+State 79
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   62    | NOT exp .
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 62 (exp)
+
+
+State 80
+
+   38 stmt: WHILE LP . exp RP stmt
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 111
+    constant  转到状态 70
+
+
+State 81
+
+   36 stmt: IF LP . exp RP stmt
+   37     | IF LP . exp RP stmt ELSE stmt
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 112
+    constant  转到状态 70
+
+
+State 82
+
+   35 stmt: RETURN SEMICOLON .
+
+    $default  reduce using rule 35 (stmt)
+
+
+State 83
+
+   34 stmt: RETURN exp . SEMICOLON
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    SEMICOLON            shift, and go to state 113
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+
+State 84
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   60    | LP exp . RP
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    RP                   shift, and go to state 114
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+
+State 85
+
+   28 compst: LC deflist stmtlist error . RC
+
+    RC  shift, and go to state 115
+
+
+State 86
+
+   27 compst: LC deflist stmtlist RC .
+
+    $default  reduce using rule 27 (compst)
+
+
+State 87
+
+   29 stmtlist: stmt stmtlist .
+
+    $default  reduce using rule 29 (stmtlist)
+
+
+State 88
+
+   32 stmt: exp error . SEMICOLON
+
+    SEMICOLON  shift, and go to state 116
+
+
+State 89
+
+   56 exp: exp PLUS . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 117
+    constant  转到状态 70
+
+
+State 90
+
+   57 exp: exp SUB . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 118
+    constant  转到状态 70
+
+
+State 91
+
+   58 exp: exp MUL . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 119
+    constant  转到状态 70
+
+
+State 92
+
+   59 exp: exp DIV . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 120
+    constant  转到状态 70
+
+
+State 93
+
+   47 exp: exp ASSIGNOP . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 121
+    constant  转到状态 70
+
+
+State 94
+
+   31 stmt: exp SEMICOLON .
+
+    $default  reduce using rule 31 (stmt)
+
+
+State 95
+
+   66 exp: exp POINT . WORD
+
+    WORD  shift, and go to state 122
+
+
+State 96
+
+   50 exp: exp JUDGE_BIGER . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 123
+    constant  转到状态 70
+
+
+State 97
+
+   51 exp: exp JUDGE_SMALLER . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 124
+    constant  转到状态 70
+
+
+State 98
+
+   52 exp: exp JUDGE_BIGER_EQUAL . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 125
+    constant  转到状态 70
+
+
+State 99
+
+   53 exp: exp JUDGE_SMALLER_EQUAL . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 126
+    constant  转到状态 70
+
+
+State 100
+
+   55 exp: exp JUDGE_EQUAL . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 127
+    constant  转到状态 70
+
+
+State 101
+
+   54 exp: exp JUDGE_NOT_EQUAL . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 128
+    constant  转到状态 70
+
+
+State 102
+
+   65 exp: exp LB . exp RB
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 129
+    constant  转到状态 70
+
+
+State 103
+
+   49 exp: exp OR . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 130
+    constant  转到状态 70
+
+
+State 104
+
+   48 exp: exp AND . exp
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 131
+    constant  转到状态 70
+
+
+State 105
+
+   46 dec: vardec ASSIGNOP exp .
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+    $default  reduce using rule 46 (dec)
+
+
+State 106
+
+   42 def: specifier declist error SEMICOLON .
+
+    $default  reduce using rule 42 (def)
+
+
+State 107
+
+   44 declist: dec COMMA declist .
+
+    $default  reduce using rule 44 (declist)
+
+
+State 108
+
+   64 exp: WORD LP RP .
+
+    $default  reduce using rule 64 (exp)
+
+
+State 109
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+   72 args: exp . COMMA args
+   73     | exp .
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    COMMA                shift, and go to state 132
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+    $default  reduce using rule 73 (args)
+
+
+State 110
+
+   63 exp: WORD LP args . RP
+
+    RP  shift, and go to state 133
+
+
+State 111
+
+   38 stmt: WHILE LP exp . RP stmt
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    RP                   shift, and go to state 134
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+
+State 112
+
+   36 stmt: IF LP exp . RP stmt
+   37     | IF LP exp . RP stmt ELSE stmt
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    RP                   shift, and go to state 135
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+
+State 113
+
+   34 stmt: RETURN exp SEMICOLON .
+
+    $default  reduce using rule 34 (stmt)
+
+
+State 114
+
+   60 exp: LP exp RP .
+
+    $default  reduce using rule 60 (exp)
+
+
+State 115
+
+   28 compst: LC deflist stmtlist error RC .
+
+    $default  reduce using rule 28 (compst)
+
+
+State 116
+
+   32 stmt: exp error SEMICOLON .
+
+    $default  reduce using rule 32 (stmt)
+
+
+State 117
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   56    | exp PLUS exp .
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 56 (exp)
+
+
+State 118
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   57    | exp SUB exp .
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 57 (exp)
+
+
+State 119
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   58    | exp MUL exp .
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 58 (exp)
+
+
+State 120
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   59    | exp DIV exp .
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 59 (exp)
+
+
+State 121
+
+   47 exp: exp . ASSIGNOP exp
+   47    | exp ASSIGNOP exp .
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+    $default  reduce using rule 47 (exp)
+
+
+State 122
+
+   66 exp: exp POINT WORD .
+
+    $default  reduce using rule 66 (exp)
+
+
+State 123
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   50    | exp JUDGE_BIGER exp .
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS   shift, and go to state 89
+    SUB    shift, and go to state 90
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 50 (exp)
+
+
+State 124
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   51    | exp JUDGE_SMALLER exp .
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS   shift, and go to state 89
+    SUB    shift, and go to state 90
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 51 (exp)
+
+
+State 125
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   52    | exp JUDGE_BIGER_EQUAL exp .
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS   shift, and go to state 89
+    SUB    shift, and go to state 90
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 52 (exp)
+
+
+State 126
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   53    | exp JUDGE_SMALLER_EQUAL exp .
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS   shift, and go to state 89
+    SUB    shift, and go to state 90
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 53 (exp)
+
+
+State 127
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   55    | exp JUDGE_EQUAL exp .
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS   shift, and go to state 89
+    SUB    shift, and go to state 90
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 55 (exp)
+
+
+State 128
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   54    | exp JUDGE_NOT_EQUAL exp .
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS   shift, and go to state 89
+    SUB    shift, and go to state 90
+    MUL    shift, and go to state 91
+    DIV    shift, and go to state 92
+    POINT  shift, and go to state 95
+    LB     shift, and go to state 102
+
+    $default  reduce using rule 54 (exp)
+
+
+State 129
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   65    | exp LB exp . RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    ASSIGNOP             shift, and go to state 93
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+    RB                   shift, and go to state 136
+    OR                   shift, and go to state 103
+    AND                  shift, and go to state 104
+
+
+State 130
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   49    | exp . OR exp
+   49    | exp OR exp .
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+    AND                  shift, and go to state 104
+
+    $default  reduce using rule 49 (exp)
+
+
+State 131
+
+   47 exp: exp . ASSIGNOP exp
+   48    | exp . AND exp
+   48    | exp AND exp .
+   49    | exp . OR exp
+   50    | exp . JUDGE_BIGER exp
+   51    | exp . JUDGE_SMALLER exp
+   52    | exp . JUDGE_BIGER_EQUAL exp
+   53    | exp . JUDGE_SMALLER_EQUAL exp
+   54    | exp . JUDGE_NOT_EQUAL exp
+   55    | exp . JUDGE_EQUAL exp
+   56    | exp . PLUS exp
+   57    | exp . SUB exp
+   58    | exp . MUL exp
+   59    | exp . DIV exp
+   65    | exp . LB exp RB
+   66    | exp . POINT WORD
+
+    PLUS                 shift, and go to state 89
+    SUB                  shift, and go to state 90
+    MUL                  shift, and go to state 91
+    DIV                  shift, and go to state 92
+    POINT                shift, and go to state 95
+    JUDGE_BIGER          shift, and go to state 96
+    JUDGE_SMALLER        shift, and go to state 97
+    JUDGE_BIGER_EQUAL    shift, and go to state 98
+    JUDGE_SMALLER_EQUAL  shift, and go to state 99
+    JUDGE_EQUAL          shift, and go to state 100
+    JUDGE_NOT_EQUAL      shift, and go to state 101
+    LB                   shift, and go to state 102
+
+    $default  reduce using rule 48 (exp)
+
+
+State 132
+
+   72 args: exp COMMA . args
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    LP           shift, and go to state 65
+
+    exp       转到状态 109
+    constant  转到状态 70
+    args      转到状态 137
+
+
+State 133
+
+   63 exp: WORD LP args RP .
+
+    $default  reduce using rule 63 (exp)
+
+
+State 134
+
+   38 stmt: WHILE LP exp RP . stmt
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    WHILE        shift, and go to state 62
+    IF           shift, and go to state 63
+    RETURN       shift, and go to state 64
+    LP           shift, and go to state 65
+    LC           shift, and go to state 28
+
+    compst    转到状态 66
+    stmt      转到状态 138
+    exp       转到状态 69
+    constant  转到状态 70
+
+
+State 135
+
+   36 stmt: IF LP exp RP . stmt
+   37     | IF LP exp RP . stmt ELSE stmt
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    WHILE        shift, and go to state 62
+    IF           shift, and go to state 63
+    RETURN       shift, and go to state 64
+    LP           shift, and go to state 65
+    LC           shift, and go to state 28
+
+    compst    转到状态 66
+    stmt      转到状态 139
+    exp       转到状态 69
+    constant  转到状态 70
+
+
+State 136
+
+   65 exp: exp LB exp RB .
+
+    $default  reduce using rule 65 (exp)
+
+
+State 137
+
+   72 args: exp COMMA args .
+
+    $default  reduce using rule 72 (args)
+
+
+State 138
+
+   38 stmt: WHILE LP exp RP stmt .
+
+    $default  reduce using rule 38 (stmt)
+
+
+State 139
+
+   36 stmt: IF LP exp RP stmt .
+   37     | IF LP exp RP stmt . ELSE stmt
+
+    ELSE  shift, and go to state 140
+
+    $default  reduce using rule 36 (stmt)
+
+
+State 140
+
+   37 stmt: IF LP exp RP stmt ELSE . stmt
+
+    WORD         shift, and go to state 56
+    INT_DIGIT    shift, and go to state 57
+    FLOAT_DIGIT  shift, and go to state 58
+    CHAR_DIGIT   shift, and go to state 59
+    MUL          shift, and go to state 60
+    NOT          shift, and go to state 61
+    WHILE        shift, and go to state 62
+    IF           shift, and go to state 63
+    RETURN       shift, and go to state 64
+    LP           shift, and go to state 65
+    LC           shift, and go to state 28
+
+    compst    转到状态 66
+    stmt      转到状态 141
+    exp       转到状态 69
+    constant  转到状态 70
+
+
+State 141
+
+   37 stmt: IF LP exp RP stmt ELSE stmt .
+
+    $default  reduce using rule 37 (stmt)

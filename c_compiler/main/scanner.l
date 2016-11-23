@@ -1,6 +1,6 @@
 %{
 
-    #include "../syntax/syntax.tab.h"
+    #include "syntax.tab.h"
     #include"token.h"
     #include"Node.h"
     #include<string.h>
@@ -10,7 +10,7 @@
     int yycolumn = 1;
     int errorCount = 0;
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng - 1; yycolumn += yyleng;
-    struct Node* NewNode(char *node_name, int lineno, int group);
+    struct Node* NewNode(int node_name, int lineno, int listno, int group);
 
 %}
 
@@ -43,247 +43,236 @@ enter [\n]+
 
 "#" {
     print("#"); 
-    yylval.token_p = NewNode(yytext, yylineno, POUND); 
     return POUND;
 }
 
 "include" {
     print("include"); 
-    yylval.token_p = NewNode(yytext, yylineno, INCLUDE); 
     return INCLUDE;
 }
 
 "void" {
     print("void"); 
-    yylval.token_p = NewNode(yytext, yylineno, VOID); 
     return VOID;
 }
 
 "int" {
     print("int"); 
-    yylval.token_p = NewNode(yytext, yylineno, INT); 
     return INT;
 }
 
 "char" {
     print("char"); 
-    yylval.token_p = NewNode(yytext, yylineno, CHAR);  
     return CHAR;
 }
 
 "double" {
     print("double"); 
-    yylval.token_p = NewNode(yytext, yylineno, DOUBLE); 
     return DOUBLE;
 }
 
 "float" {
     print("float"); 
-    yylval.token_p = NewNode(yytext, yylineno, FLOAT); 
     return FLOAT;
 }
 
 "short" {
     print("short"); 
-    yylval.token_p = NewNode(yytext, yylineno, SHORT); 
     return SHORT;
 }
 
 "unsigned" {
     print("unsigned"); 
-    yylval.token_p = NewNode(yytext, yylineno, UNSIGNED); 
     return UNSIGNED;
 }
 
 "+" {
     print("+"); 
-    yylval.token_p = NewNode(yytext, yylineno, PLUS); 
+    //yylval.token_p = NewNode(yytext, yylineno, PLUS); 
     return PLUS;
 }
 
 "-" {
     print("-"); 
-    yylval.token_p = NewNode(yytext, yylineno, SUB); 
+    //yylval.token_p = NewNode(yytext, yylineno, SUB); 
     return SUB;
 }
 
 "*" {
     print("*"); 
-    yylval.token_p = NewNode(yytext, yylineno, MUL); 
+    //yylval.token_p = NewNode(yytext, yylineno, MUL); 
     return MUL;
 }
 
 "/" {
     print("/"); 
-    yylval.token_p = NewNode(yytext, yylineno, DIV); 
+    //yylval.token_p = NewNode(yytext, yylineno, DIV); 
     return DIV;
 }
 
 "%" {
     print("%"); 
-    yylval.token_p = NewNode(yytext, yylineno, MOD); 
+    //yylval.token_p = NewNode(yytext, yylineno, MOD); 
     return MOD;
 }
 
 "=" {
     print("="); 
-    yylval.token_p = NewNode(yytext, yylineno, ASSIGNOP); 
+    //yylval.token_p = NewNode(yytext, yylineno, ASSIGNOP); 
     return ASSIGNOP;
 }
 
 ">" {
     print(">"); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGER); 
-    return JUDGE_BIGER;
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGGER); 
+    return JUDGE_BIGGER;
 }
 
 "<" {
     print("<"); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER); 
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER); 
     return JUDGE_SMALLER;
 }
 
 ">=" {
     print(">="); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGER_EQUAL); 
-    return JUDGE_BIGER_EQUAL;
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_BIGGER_EQUAL); 
+    return JUDGE_BIGGER_EQUAL;
 }
 
 "<=" {
     print("<="); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER_EQUAL); 
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_SMALLER_EQUAL); 
     return JUDGE_SMALLER_EQUAL;
 }
 
 "==" {
     print("=="); 
-    yylval.token_p = NewNode(yytext, yylineno,  JUDGE_EQUAL); 
+    //yylval.token_p = NewNode(yytext, yylineno,  JUDGE_EQUAL); 
     return JUDGE_EQUAL;
 }
 
 "!=" {
     print("!="); 
-    yylval.token_p = NewNode(yytext, yylineno, JUDGE_NOT_EQUAL); 
+    //yylval.token_p = NewNode(yytext, yylineno, JUDGE_NOT_EQUAL); 
     return JUDGE_NOT_EQUAL;
 }
 
 "\"" {
     print("\""); 
-    yylval.token_p = NewNode(yytext, yylineno, DOUBLE_QUOTE); 
     return DOUBLE_QUOTE;
 }
 
 "\'" {
     print("\'"); 
-    yylval.token_p = NewNode(yytext, yylineno, SINGLE_QUOTE); 
     return SINGLE_QUOTE;
 }
 
 "for" {
     print("for"); 
-    yylval.token_p = NewNode(yytext, yylineno, FOR); 
+    //yylval.token_p = NewNode(yytext, yylineno, FOR); 
     return FOR;
 }
 
 "while" {
     print("while"); 
-    yylval.token_p = NewNode(yytext, yylineno, WHILE); 
+    //yylval.token_p = NewNode(yytext, yylineno, WHILE); 
     return WHILE;
 }
 
 "if" {
     print("if"); 
-    yylval.token_p = NewNode(yytext, yylineno, IF); 
+    //yylval.token_p = NewNode(yytext, yylineno, IF); 
     return IF;
 }
 
 "else" {
     print("else"); 
-    yylval.token_p = NewNode(yytext, yylineno, ELSE); 
+    //yylval.token_p = NewNode(yytext, yylineno, ELSE); 
     return ELSE;
 }
 
 "return" {
     print("return"); 
-    yylval.token_p = NewNode(yytext, yylineno, RETURN); 
+    //yylval.token_p = NewNode(yytext, yylineno, RETURN); 
     return RETURN;
 }
 
 "break" {
     print("break"); 
-    yylval.token_p = NewNode(yytext, yylineno, BREAK); 
+    //yylval.token_p = NewNode(yytext, yylineno, BREAK); 
     return BREAK;
 }
 
 "struct" {
     print("struct"); 
-    yylval.token_p = NewNode(yytext, yylineno, STRUCT); 
+    //yylval.token_p = NewNode(yytext, yylineno, STRUCT); 
     return STRUCT;
 }
 
 "(" {
     print("("); 
-    yylval.token_p = NewNode(yytext, yylineno, LP); 
+    //yylval.token_p = NewNode(yytext, yylineno, LP); 
     return LP;
 }
 
 ")" {
     print(")"); 
-    yylval.token_p = NewNode(yytext, yylineno, RP); 
+    //yylval.token_p = NewNode(yytext, yylineno, RP); 
     return RP;
 }
 
 "," {
     print(","); 
-    yylval.token_p = NewNode(yytext, yylineno, COMMA); 
+    //yylval.token_p = NewNode(yytext, yylineno, COMMA); 
     return COMMA;
 }
 
 "." {
     print("."); 
-    yylval.token_p = NewNode(yytext, yylineno, POINT); 
+    //yylval.token_p = NewNode(yytext, yylineno, POINT); 
     return POINT;
 }
 
 ";" {
     print(";"); 
-    yylval.token_p = NewNode(yytext, yylineno, SEMICOLON); 
+    //yylval.token_p = NewNode(yytext, yylineno, SEMICOLON); 
     return SEMICOLON;
 }
 
 "{" {
     print("{"); 
-    yylval.token_p = NewNode(yytext, yylineno, LC); 
+    //yylval.token_p = NewNode(yytext, yylineno, LC); 
     return LC;
 }
 
 "}" {
     print("}"); 
-    yylval.token_p = NewNode(yytext, yylineno, RC); 
+    //yylval.token_p = NewNode(yytext, yylineno, RC); 
     return RC;
 }
 
 "[" {
     print("["); 
-    yylval.token_p = NewNode(yytext, yylineno, LB); 
+    //yylval.token_p = NewNode(yytext, yylineno, LB); 
     return LB;
 }
 
 "]" {
     print("]"); 
-    yylval.token_p = NewNode(yytext, yylineno, RB); 
+    //yylval.token_p = NewNode(yytext, yylineno, RB); 
     return RB;
 }
 
 "&&" {
     print("AND"); 
-    yylval.token_p = NewNode(yytext, yylineno, AND); 
+    //yylval.token_p = NewNode(yytext, yylineno, AND); 
     return AND;
 }
 
 "||" {
     print("OR"); 
-    yylval.token_p = NewNode(yytext, yylineno, OR); 
+    //yylval.token_p = NewNode(yytext, yylineno, OR); 
     return OR;
 }
 
@@ -305,7 +294,10 @@ enter [\n]+
 
 {word} {
     print("word"); 
-    yylval.token_p = NewNode(yytext, yylineno, WORD); 
+    // yylval.token_p = NewNode(WORD, yylineno, WORD); 
+    // char *s = yytext;
+    yylval.type_string= strdup(yytext);
+    // printf("%s\n", s);
     return WORD;
 }
 
@@ -315,7 +307,7 @@ enter [\n]+
 
 {octal} {
     print("octal"); 
-    yylval.token_p = NewNode(yytext, yylineno, OCTAL); 
+    //yylval.token_p = NewNode(OCTAL, yylineno, OCTAL); 
     return OCTAL;
 }
 
@@ -333,25 +325,28 @@ enter [\n]+
 
 {hexadecimal} {
     print("hexadecimal"); 
-    yylval.token_p = NewNode(yytext, yylineno, HEXADECIMAL); 
+    //yylval.token_p = NewNode(HEXADECIMAL, yylineno, HEXADECIMAL); 
     return HEXADECIMAL;
 }
 
 {int_digit} {
     print("int_digit"); 
-    yylval.token_p = NewNode(yytext, yylineno, INT_DIGIT); 
+    //yylval.token_p = NewNode(INT_DIGIT, yylineno, INT_DIGIT); 
+    yylval.type_int = atoi(yytext);
     return INT_DIGIT;
 }
 
 {float_digit} {
     print("float_digit"); 
-    yylval.token_p = NewNode(yytext, yylineno, FLOAT_DIGIT); 
+    //yylval.token_p = NewNode(FLOAT_DIGIT, yylineno, FLOAT_DIGIT); 
+    yylval.type_float = atof(yytext);
     return FLOAT_DIGIT;
 }
 
 {char_digit} {
     print("char_digit"); 
-    yylval.token_p = NewNode(yytext, yylineno, CHAR_DIGIT);  
+    //yylval.token_p = NewNode(CHAR_DIGIT, yylineno, CHAR_DIGIT);  
+    yylval.type_char = *yytext;
     return CHAR_DIGIT;
 }
 
@@ -388,9 +383,9 @@ int yywrap()
 /*
 函数功能：打印关键字信息
 */
-void print(const char* s) {
-    FILE *g = fopen("result.txt", "w+");
-    fputs(s, g);
+void print(const char *s) {
+    //FILE *g = fopen("result.txt", "w+");
+    //fprintf(g, "%s", s);
 }
 
 void CommentMatch() {
@@ -409,19 +404,19 @@ void CommentMatch() {
     }
 }
 
-struct Node* NewNode(char *node_name, int lineno, int group) {
+/* --NewNode-- */
+struct Node* NewNode(int node_name, int lineno, int listno, int isWhat) {
     struct Node *p = (struct Node*)malloc(sizeof(struct Node));
     if(p == NULL) {
         printf("Error: out of memory.\n");
         exit(1);
     }
-    p->name = (char *)malloc(sizeof(char) * (strlen(node_name) + 1));
-    strcpy(p->name, node_name);
-    p->group = group;
-    p->type = NULL;    //语义分析时赋值
+    p->name = node_name;
+    p->lineno = lineno;
+    p->listno = listno;
+    p->type = isWhat;    //语义分析时赋值
     p->brother = NULL;
     p->child = NULL;
-    p->No_Line = lineno;
     p->No_Child = 0;
     p->IsBegin = 0;
     return p;

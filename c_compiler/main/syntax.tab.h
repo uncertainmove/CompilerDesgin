@@ -34,7 +34,7 @@
 # define YY_YY_SYNTAX_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -49,18 +49,18 @@ extern int yydebug;
     INCLUDE = 259,
     VOID = 260,
     INT = 261,
-    WORD = 262,
-    INT_DIGIT = 263,
-    FLOAT = 264,
-    FLOAT_DIGIT = 265,
-    DOUBLE = 266,
-    OCTAL = 267,
-    HEXADECIMAL = 268,
-    SHORT = 269,
-    UNSIGNED = 270,
-    UNSIGNED_DIGIT = 271,
-    CHAR = 272,
-    CHAR_DIGIT = 273,
+    FLOAT = 262,
+    CHAR = 263,
+    INT_DIGIT = 264,
+    CHAR_DIGIT = 265,
+    FLOAT_DIGIT = 266,
+    WORD = 267,
+    DOUBLE = 268,
+    OCTAL = 269,
+    HEXADECIMAL = 270,
+    SHORT = 271,
+    UNSIGNED = 272,
+    UNSIGNED_DIGIT = 273,
     PLUS = 274,
     SUB = 275,
     MUL = 276,
@@ -72,9 +72,9 @@ extern int yydebug;
     POINT = 282,
     SINGLE_QUOTE = 283,
     DOUBLE_QUOTE = 284,
-    JUDGE_BIGER = 285,
+    JUDGE_BiGGER = 285,
     JUDGE_SMALLER = 286,
-    JUDGE_BIGER_EQUAL = 287,
+    JUDGE_BIGGER_EQUAL = 287,
     JUDGE_SMALLER_EQUAL = 288,
     JUDGE_EQUAL = 289,
     JUDGE_NOT_EQUAL = 290,
@@ -100,7 +100,8 @@ extern int yydebug;
     ANNOTATION_BLOCK_START = 310,
     ANNOTATION_BLOCK_STOP = 311,
     STRING = 312,
-    LOWER_THAN_ELSE = 313
+    JUDGE_BIGGER = 313,
+    LOWER_THAN_ELSE = 314
   };
 #endif
 
@@ -109,11 +110,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 28 "syntax.y" /* yacc.c:1909  */
+#line 16 "syntax.y" /* yacc.c:1909  */
 
+    int type_int;
+    char type_char;
+    float type_float;
+    char *type_string;
     struct Node *token_p;
 
-#line 117 "syntax.tab.h" /* yacc.c:1909  */
+#line 122 "syntax.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
