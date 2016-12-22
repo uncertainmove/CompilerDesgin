@@ -1,15 +1,22 @@
 /*************************************************************************
-	> File Name: Scope.h
-	> Author: zengzhen
-	> Mail: u201414816@hust.edu.cn
-	> Created Time: 2016年11月03日 星期四 09时33分24秒
+	> File Name: semant.h
+	> Author: 
+	> Mail: 
+	> Created Time: 2016年12月01日 星期四 07时39分18秒
  ************************************************************************/
 
-#ifndef _SCOPE_H
-#define _SCOPE_H
+#ifndef _SEMANT_H
+#define _SEMANT_H
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include"absyn.h"
+#include"syntax.tab.h"
+#include"frame.h"
 
 typedef struct Type_* Type;
 typedef struct FieldList_* FieldList;
+typedef struct Temp* _Temp;
 
 struct Symbol {
     int action;     // 符号是否为当前域
@@ -18,6 +25,9 @@ struct Symbol {
         int elemtype;
         int structNum; // 结构对应内部编号
     };
+    _Temp _temp; // 生成tac时绑定temp
+    int address; // 符号存放的相对ebp地址
+    int size; // 若为结构体则存放结构体size
     char *name;     // 变量名
     int type;
     struct Node *varlist;
@@ -57,8 +67,6 @@ struct Hash {   // 管理当前作用域的所有符号
     //struct Hash *next;
     struct Symbol *symbol;
 };
-void CreateFuncLink(struct Node *root); // 遍历语法树生成函数链表
-void CreateVarLink(struct Node *root);  // 遍历语法树生成普通变量链表
 void OpenScope();  // 开辟新的作用域
 void CloseScope();  // 关闭当前作用域
 struct Symbol *EnterSymbol(struct Node *node, int type);  // 添加name到符号表的当前作用域中
@@ -70,10 +78,41 @@ void Add(struct Symbol *symbol);  // 向Hash表中添加表项
 void Delete(struct Symbol *symbol); // 从Hash表中简单删除表项
 void PrintScopeDisplay(struct Symbol **scopeDisplay);
 void PrintHash(struct Hash *hash);
-int RT(struct Node *root, int type);
 int CheckType(int type1, int type2);
 int GetStructNum(char *name);
 int FindSTID(int STID, char *name);
 void MatchFundecArgs(struct Symbol *symbol, struct Node *args);
 int ST(struct Node *node, char *name, int s_type, int *findtype);
+void RecursionTypeAssign(struct Node *p);  // 语义分析
+void CreateSymbolList(struct Node *p);  // 语义分析
+void TypeAssign(struct Node *p, char *type);
+void TypeInsert(struct Node* parent, struct Node* child);
+void InsertSymbol(struct Node *p);
+void RecursionTreePrint(struct Node* root, int spaceNum);
+void RecursionInsertSymbol(struct Node *p);
+// 为变量分配空间
+int ChangeAddr(int *address, struct Symbol *symbol);
+
+// RT
+void RTprogram(struct Node *root);
+void RTextdeflist(struct Node *root);
+void RTextdef(struct Node *root);
+int RTspecifier(struct Node *root);
+void RTdef(struct Node *root);
+void RTdeclist(struct Node *root, int s_type);
+void RTvardec(struct Node *root, int s_type);
+void RTdec(struct Node *root, int s_type);
+void RTextdeclist(struct Node *root, int s_type);
+void RTfundec(struct Node *root, int s_type);
+void RTcompst(struct Node *root, int s_type);
+int RTstructspecifier(struct Node *root);
+void RTdeflist(struct Node *root);
+int RTtag(struct Node *root);
+void RTvarlist(struct Node *root);
+int RTparamdec(struct Node *root);
+void RTstmtlist(struct Node *root, int s_type);
+void RTstmt(struct Node *root, int s_type);
+int RTargs(struct Node *, struct Node *var);
+int RTexp(struct Node *root, int s_type);
+
 #endif

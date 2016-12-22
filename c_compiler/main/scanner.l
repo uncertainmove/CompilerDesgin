@@ -1,16 +1,19 @@
 %{
 
     #include "syntax.tab.h"
-    #include"token.h"
-    #include"Node.h"
-    #include<string.h>
-    #include<stdlib.h>
-    #include<stdio.h>
+    #include"absyn.h"
+    typedef struct YYLTYPE {
+        int first_line;
+        int first_column;
+        int last_line;
+        int last_column;
+    }YYLTYPE;
     struct YYLTYPE yylloc;
     int yycolumn = 1;
     int errorCount = 0;
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng - 1; yycolumn += yyleng;
-    struct Node* NewNode(int node_name, int lineno, int listno, int group);
+	void print(const char *);
+	void CommentMatch();
 
 %}
 
@@ -403,32 +406,3 @@ void CommentMatch() {
         }
     }
 }
-
-/* --NewNode-- */
-struct Node* NewNode(int node_name, int lineno, int listno, int isWhat) {
-    struct Node *p = (struct Node*)malloc(sizeof(struct Node));
-    if(p == NULL) {
-        printf("Error: out of memory.\n");
-        exit(1);
-    }
-    p->name = node_name;
-    p->lineno = lineno;
-    p->listno = listno;
-    p->type = isWhat;    //语义分析时赋值
-    p->brother = NULL;
-    p->child = NULL;
-    p->No_Child = 0;
-    p->IsBegin = 0;
-    return p;
-}
-
-/*
-函数功能：转换大小写
-*/
-/* void Upper(char *s, int l) {
-    int i;
-    for(i = 0; i < l; i++) {
-        s[i] = toupper(s[i]);
-    }
-}
-*/

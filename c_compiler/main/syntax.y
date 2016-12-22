@@ -1,13 +1,12 @@
 %{
 
 #include"lex.yy.c"
-#include"Node.h"
+#include"absyn.h"
 #include<string.h>
 extern struct Node *p;
-void StarToString(char **type, const char *s);
 int yyerror(const char *msg);
 //yydebug = 1;
-enum { array, program, extdeflist, extdef, specifier, def, declist, vardec, dec, extdeclist, fundec, compst, type, structspecifier, opttag, deflist, tag, varlist, paramdec, stmtlist, stmt, exp, args, constant, };
+// enum notoken {array, program, extdeflist, extdef, specifier, def, declist, vardec, dec, extdeclist, fundec, compst, type, structspecifier, opttag, deflist, tag, varlist, paramdec, stmtlist, stmt, exp, args, constant,};
 
 %}
 
@@ -98,7 +97,6 @@ extdef : specifier extdeclist SEMICOLON {
        | specifier SEMICOLON {
             p = NewNode(extdef, yylineno, yylloc.first_column, 0);
             insert(p, $1);
-            p->type = -1;
             $$ = p;
        }
        | specifier fundec compst {
@@ -183,6 +181,7 @@ tag : WORD {
         p = NewNode(tag, yylineno, yylloc.first_column, 0);
         p->word_name = (char *)malloc(sizeof(char) * strlen($1));
         strcpy(p->word_name, $1);
+        p->type = tag;
         $$ = p;
     }
     ;
@@ -330,7 +329,7 @@ deflist : def deflist {
             $$ = p;
         }
         | {
-            p = NULL; 
+            p = NewNode(deflist, yylineno, yylloc.first_column, 0); 
             $$ = p;
         }
 
@@ -631,26 +630,5 @@ int yyerror(const char* msg) {
     return 1;
 }
 
-/* --insert-- */
-void insert(struct Node* parent, struct Node* child) {
-    struct Node *p;
-    if(child == NULL) {
-        return;
-    }
-    if(parent->No_Child == 0) {
-        parent->child = child;
-        child->IsBegin = 1;
-        parent->No_Child = 1;
-    }
-    else {
-        p = parent->child;
-        while(p->brother!= NULL) {
-            p = p->brother;
-        }
-        p->brother = child;
-        child->IsBegin = 0;
-        parent->No_Child++;
-    }
-}
 
 

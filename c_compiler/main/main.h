@@ -10,19 +10,11 @@
 
 #include<stdio.h>
 #include<string.h>
-#include"Node.h"
-#include"Scope.h"
-#include"token.h"
+#include"absyn.h"
 #include"syntax.tab.c"
-#define H_NUM 5
+#include"semant.h"
+#include"frame.h"
+#include "target.h"
 
-void RecursionTypeAssign(struct Node *p);  // 语义分析
-void CreateSymbolList(struct Node *p);  // 语义分析
-void TypeAssign(struct Node *p, char *type);
-void TypeInsert(struct Node* parent, struct Node* child);
-void InsertSymbol(struct Node *p);
-void RecursionTreePrint(struct Node* root, int spaceNum);
-void TreePrint(struct Node* root);
-void RecursionInsertSymbol(struct Node *p);
 
 #endif
